@@ -27,8 +27,6 @@ const server = new ApolloServer({
         booksApi:new BooksApi()
     })
 });
-server.listen({port:80,host:"0.0.0.0"}).then(({
-    url
-}) => {
-    console.log(`🚀 Server ready at ${url}`)
-})
+server.listen({ port: process.env.PORT || 4000 }).then(({ url }) => {
+    console.log(`🚀 Server ready at ${url}`);
+  });
