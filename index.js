@@ -25,7 +25,9 @@ const server = new ApolloServer({
     resolvers,
     dataSources:()=>({
         booksApi:new BooksApi()
-    })
+    }),
+    introspection: true, // enables introspection of the schema
+    playground: true, // enables the actual playground
 });
 server.listen({ port: process.env.PORT || 4000 }).then(({ url }) => {
     console.log(`🚀 Server ready at ${url}`);
