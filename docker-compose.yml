@@ -4,4 +4,4 @@ services:
     build: .
     command: node ./index.js
     ports:
-      - "4000:4000"
+      - "80:4000"
