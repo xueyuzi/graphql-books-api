@@ -1,0 +1,13 @@
+query getquery($query:String!){
+  books(query: $query){
+    id
+    title
+    author_intro
+    summary
+    cover_url
+    rating
+    tags
+    pubdate
+    
+  }
+}
