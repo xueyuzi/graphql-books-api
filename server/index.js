@@ -10,20 +10,32 @@ const typeDefs = gql`
         title:String
         publisher:String
         author_intro:String
+        author:String
         summary:String
-        cover_url:String
+        image:String
         rating:String
         tags:[String]
         pubdate:String
         subtitle:String
         catalog:String
-        
+        series:String
     }
     
     type Query{
         books(query:String!):[Book]
+        book(id:String!):Book
     }
 `;
+const _transResToBook = (res) => {
+    let data = {
+        ...res
+    };
+    data.rating = res.rating.average
+    data.tags = res.tags.map(tag => tag.title)
+    data.author = res.author ? res.author[0] : "无名氏"
+    data.series = res.series ? res.series.title : "无系列"
+    return data
+}
 
 const resolvers = {
     Query: {
@@ -33,20 +45,20 @@ const resolvers = {
             dataSources
         }) => {
             return dataSources.booksApi.searchBooks(query).then(res => {
-                console.log("res")
-                if (res) {
-                    return res.map(book => {
-                        let data = {
-                            ...book
-                        };
-                        data.rating = book.rating.average
-                        data.tags = book.tags.map(tag=>tag.title)
-                        return data
-                    })
+                if (!res) {
+                    return []
                 }
+                console.log("search Books")
+                return res.map(book => _transResToBook(book))
             })
-
-
+        },
+        book: (_, {
+            id
+        }, {
+            dataSources
+        }) => {
+            console.log("get Book")
+            return dataSources.booksApi.getBook(id).then(_transResToBook)
         }
     },
 }

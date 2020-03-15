@@ -13,14 +13,14 @@ module.exports = {
             loader: 'graphql-tag/loader'
         }),
         removeModuleScopePlugin(),
-        fixBabelImports('import', {
+        fixBabelImports('pc', {
             libraryName: 'antd',
             libraryDirectory: 'es',
             style: 'css',
         }),
-        // fixBabelImports('import', {
-        //     libraryName: 'antd-mobile',
-        //     style: 'css',
-        // }),
+        fixBabelImports('mobile', {
+            libraryName: 'antd-mobile',
+            style: 'css',
+        }),
     )
 }
