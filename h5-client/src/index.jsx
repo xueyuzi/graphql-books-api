@@ -28,7 +28,7 @@ const cache = new InMemoryCache({
   }
 });
 const client = new ApolloClient({
-  uri: "http://localhost:4000",
+  uri: "http://gql.xueyuzi.com:4000",
   link: new HttpLink(),
   cache,
   typeDefs:gql`

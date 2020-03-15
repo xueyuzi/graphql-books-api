@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import { TabBar } from "antd-mobile";
-import { useHistory, useLocation, Route } from "react-router-dom";
+import { useHistory, useLocation, Route,Redirect } from "react-router-dom";
 import HomePage from "./pages/home";
 import BookPage from "./pages/book-detail";
 import CartPage from "./pages/cart";
@@ -27,6 +27,9 @@ function App() {
           selected={location.pathname.match("home")}
           onPress={() => history.replace("/home")}
         >
+          <Route exact path="/">
+            <Redirect to="/home"/>
+          </Route>
           <Route exact path="/home" component={HomePage} />
           <Route exact path="/home/book/:id" component={BookPage} />
         </TabBar.Item>
