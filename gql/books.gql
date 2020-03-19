@@ -1,0 +1,26 @@
+fragment OneBOOK on Book {
+  id
+  title
+  author_intro
+  author
+  summary
+  rating
+  tags
+  pubdate,
+  image
+}
+
+query GET_BOOK_LIST($query:String!){
+  books(query: $query){
+    ...OneBOOK
+  }
+}
+query GET_BOOK($id:String!){
+  book(id:$id){
+    ...OneBOOK
+  }
+}
+
+query GET_QUERY{
+  search @client
+}
