@@ -8,7 +8,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import ApolloClient,{gql} from "apollo-boost";
 import { InMemoryCache, defaultDataIdFromObject } from "apollo-cache-inmemory";
 import { HttpLink } from "apollo-link-http";
-import {GET_QUERY} from "../../gql/books.gql"
+import {GET_QUERY} from "../gql/books.gql"
 
 const cache = new InMemoryCache({
   dataIdFromObject: object => {

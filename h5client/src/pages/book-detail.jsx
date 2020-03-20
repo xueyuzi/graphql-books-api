@@ -1,7 +1,7 @@
 import React from "react";
 import { useRouteMatch,useHistory } from "react-router-dom";
 import { useQuery } from "@apollo/react-hooks";
-import { GET_BOOK } from "../../../gql/books.gql";
+import { GET_BOOK } from "../../gql/books.gql";
 import { NavBar, Icon, Card,Button,Toast } from "antd-mobile";
 export default () => {
   const match = useRouteMatch();

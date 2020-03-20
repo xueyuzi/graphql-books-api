@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { SearchBar, Card, Tag } from "antd-mobile";
-import { GET_BOOK_LIST, GET_QUERY } from "../../../gql/books.gql";
+import { GET_BOOK_LIST, GET_QUERY } from "../../gql/books.gql";
 import { useLazyQuery, useQuery, useApolloClient } from "@apollo/react-hooks";
 import { Link } from "react-router-dom";
 export default () => {

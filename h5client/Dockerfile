@@ -4,7 +4,6 @@ WORKDIR /usr/src/app
 COPY package.json  ./
 RUN npm install
 COPY . ./
-COPY ../gql ../gql
 RUN npm run build
 
 # Stage 2 - the production environment
