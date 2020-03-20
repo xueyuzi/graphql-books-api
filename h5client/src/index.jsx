@@ -40,7 +40,7 @@ const client = new ApolloClient({
 });
 cache.writeData({
   data: {
-    search: "三国志"
+    search: "芥川龙之介"
   }
 });
 

@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 export default () => {
   const [getBooks, { loading, data }] = useLazyQuery(GET_BOOK_LIST);
   const { data:queryData } = useQuery(GET_QUERY);
-  console.log(queryData)
   const { search } = queryData;
   const client = useApolloClient();
   useEffect(() => {
