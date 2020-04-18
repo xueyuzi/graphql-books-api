@@ -1,0 +1,49 @@
+type Book {
+  id: ID!
+  title: String
+  publisher: String
+  author_intro: String
+  author: String
+  summary: String
+  image: String
+  rating: String
+  tags: [String]
+  pubdate: String
+  subtitle: String
+  catalog: String
+  series: String
+}
+type Cart {
+  userId: Int
+  bookId: Int
+  bookName: String
+}
+
+type Query {
+  books(query: String!): [Book]
+  book(id: String!): Book
+  cartList: [Cart]
+}
+
+
+
+
+
+
+type Mutation {
+  login(student: StudentInput): Student
+  regist(student:StudentInput): [Int]
+}
+
+type Student{
+  id:Int
+  studentNo:Int
+  studentName:String
+  token:String
+}
+
+input StudentInput {
+  password: String
+  studentNo: Int
+  studentName: String
+}

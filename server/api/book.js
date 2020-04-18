@@ -5,8 +5,8 @@ const {
 module.exports = class BooksApi extends RESTDataSource {
     constructor() {
         super();
-        this.baseURL = "https://douban.uieee.com/v2/book";
-        // this.baseURL = "https://douban-api-git-master.zce.now.sh";
+        this.baseURL = "https://douban-api.uieee.com/v2/book";
+        // this.baseURL = "https://douban-api-git-master.zce.now.sh/v2/book";
     }
 
     async searchBooks(search) {
