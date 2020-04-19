@@ -35,6 +35,9 @@ module.exports = {
         },
         regist: async (_,{student},{dataSources})=>{
             return dataSources.mysql.addStudent(student)
+        },
+        addCart:async (_,{book},{dataSources})=>{
+            return dataSources.mysql.addCart(book)
         }
     }
 }

@@ -5,13 +5,15 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { ApolloProvider } from "@apollo/react-hooks";
 import { BrowserRouter as Router } from "react-router-dom";
-import ApolloClient,{gql} from "apollo-boost";
+import { gql } from "apollo-boost";
+import { ApolloClient } from "apollo-client";
 import { InMemoryCache, defaultDataIdFromObject } from "apollo-cache-inmemory";
-import { HttpLink } from "apollo-link-http";
-import {GET_QUERY} from "../gql/books.gql"
+import { createHttpLink } from "apollo-link-http";
+import { setContext } from "apollo-link-context";
+import { GET_QUERY } from "../gql/books.gql";
 
 const cache = new InMemoryCache({
-  dataIdFromObject: object => {
+  dataIdFromObject: (object) => {
     switch (object.__typename) {
       case "Book":
         console.log(object);
@@ -23,27 +25,44 @@ const cache = new InMemoryCache({
   cacheRedirects: {
     Query: {
       book: (_, args, { getCacheKey }) =>
-        getCacheKey({ __typename: "Book", id: args.id })
-    }
-  }
+        getCacheKey({ __typename: "Book", id: args.id }),
+    },
+  },
+});
+
+const httpLink = createHttpLink({
+  uri: "http://gql.xueyuzi.com:4000",
+});
+
+const authLink = setContext((_, { headers }) => {
+  // get the authentication token from local storage if it exists
+  const token = localStorage.getItem("token");
+  // return the headers to the context so httpLink can read them
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? token : "",
+    },
+  };
 });
 const client = new ApolloClient({
-  uri: "http://gql.xueyuzi.com:4000",
-  link: new HttpLink(),
+  // uri: "http://localhost:4000",
+  link: authLink.concat(httpLink),
   cache,
-  typeDefs:gql`
-  extend type Query {
-    search: String
-  }
-`,
-  resolvers:{}
+  typeDefs: gql`
+    extend type Query {
+      search: String
+      isLoggedIn: Boolean!
+    }
+  `,
+  resolvers: {},
 });
 cache.writeData({
   data: {
-    search: "芥川龙之介"
-  }
+    search: "芥川龙之介",
+    isLoggedIn: !!localStorage.getItem("token"),
+  },
 });
-
 ReactDOM.render(
   <ApolloProvider client={client}>
     <Router>

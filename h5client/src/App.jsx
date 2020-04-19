@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
-import { TabBar } from "antd-mobile";
-import { useHistory, useLocation, Route,Redirect } from "react-router-dom";
+import { TabBar, Toast } from "antd-mobile";
+import { useHistory, useLocation, Route, Redirect } from "react-router-dom";
 import HomePage from "./pages/home";
 import BookPage from "./pages/book-detail";
 import CartPage from "./pages/cart";
@@ -28,7 +28,7 @@ function App() {
           onPress={() => history.replace("/home")}
         >
           <Route exact path="/">
-            <Redirect to="/home"/>
+            <Redirect to="/home" />
           </Route>
           <Route exact path="/home" component={HomePage} />
           <Route exact path="/home/book/:id" component={BookPage} />
@@ -39,7 +39,14 @@ function App() {
           selected={location.pathname.match("cart")}
           icon={<i className="iconfont">&#xe7b3;</i>}
           selectedIcon={<i className="iconfont selected">&#xe7b3;</i>}
-          onPress={() => history.replace("/cart")}
+          onPress={() => {
+            if (!localStorage.getItem("token")) {
+              Toast.info("请先登录");
+              // history.replace("/user");
+              return;
+            }
+            history.replace("/cart");
+          }}
         >
           <CartPage />
         </TabBar.Item>

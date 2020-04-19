@@ -1,0 +1,21 @@
+fragment OneCart on Cart {
+  bookId
+  bookName
+  createTime
+}
+
+query GET_CARTLIST {
+  cartList {
+    ...OneCart
+  }
+}
+
+mutation ADD_CART($book: BookInput!) {
+  addCart(book: $book)
+}
+
+input BookInput {
+  studentNo: Int!
+  bookId: Int!
+  bookName: String!
+}

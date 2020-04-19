@@ -1,0 +1,19 @@
+fragment OneStudent on Student {
+  studentNo
+  studentName
+  token
+}
+mutation LOGIN($student: StudentInput!) {
+  login(student: $student) {
+    ...OneStudent
+  }
+}
+query GET_LOGIN_STATUS {
+  isLoggedIn @client
+  studentName @client
+}
+input StudentInput {
+  password: String
+  studentNo: Int
+  studentName: String
+}

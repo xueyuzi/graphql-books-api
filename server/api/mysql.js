@@ -24,6 +24,12 @@ class MyDatabase extends SQLDataSource {
                 studentNo
             })
     }
+    async addCart(book) {
+        console.log(book)
+        return this.knex
+            .insert(book)
+            .from("cart");
+    }
     async login(student) {
         let token = sha256(student.studentNo + ":" + student.password);
         let stu = (await this.getStudentByToken(token))[0];
@@ -56,13 +62,13 @@ class MyDatabase extends SQLDataSource {
         let token = sha256(student.studentNo + ":" + student.password);
         let password = sha256(student.password);
         let res = await this.knex
-        .insert({
-            studentNo: student.studentNo,
-            password,
-            token,
-            studentName: student.studentName
-        })
-        .from("student");
+            .insert({
+                studentNo: student.studentNo,
+                password,
+                token,
+                studentName: student.studentName
+            })
+            .from("student");
         console.log(res)
         return res
     }

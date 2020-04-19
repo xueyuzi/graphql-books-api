@@ -17,6 +17,7 @@ type Cart {
   userId: Int
   bookId: Int
   bookName: String
+  createTime: String
 }
 
 type Query {
@@ -25,21 +26,23 @@ type Query {
   cartList: [Cart]
 }
 
-
-
-
-
-
 type Mutation {
   login(student: StudentInput): Student
-  regist(student:StudentInput): [Int]
+  regist(student: StudentInput): [Int]
+  addCart(book: BookInput): [Int]
 }
 
-type Student{
-  id:Int
-  studentNo:Int
-  studentName:String
-  token:String
+type Student {
+  id: Int
+  studentNo: Int
+  studentName: String
+  token: String
+}
+
+input BookInput {
+  studentNo: Int!
+  bookId: Int!
+  bookName: String!
 }
 
 input StudentInput {

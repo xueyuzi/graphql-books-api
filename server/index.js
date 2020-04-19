@@ -18,6 +18,7 @@ const server = new ApolloServer({
     context: async ({ req }) => {
         const token = req.headers.authorization || '';
         const user = (await mysql.getStudentByToken(token))[0];
+        console.log(user)
         return { user };
       },
 });
