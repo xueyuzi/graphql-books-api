@@ -3,7 +3,7 @@ import { SearchBar, Card, Tag } from "antd-mobile";
 import { GET_BOOK_LIST, GET_QUERY } from "../../gql/books.gql";
 import { useLazyQuery, useQuery, useApolloClient } from "@apollo/react-hooks";
 import { Link } from "react-router-dom";
-import { axios } from "axios";
+import  axios  from "axios";
 export default () => {
   // const [getBooks, { loading, data }] = useLazyQuery(GET_BOOK_LIST);
   // const { data:queryData } = useQuery(GET_QUERY);
