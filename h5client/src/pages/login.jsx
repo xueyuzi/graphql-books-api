@@ -3,26 +3,51 @@ import { LOGIN, GET_LOGIN_STATUS } from "../../gql/login.gql";
 import { useMutation, useApolloClient, useQuery } from "@apollo/react-hooks";
 import { ApolloConsumer } from "@apollo/react-components";
 import { validate } from "graphql";
+import axios from "axios";
 import { InputItem, Button, WhiteSpace } from "antd-mobile";
 export default (props) => {
   const client = useApolloClient();
   const [message, setMessage] = useState();
   const [studentNo, setStudentNo] = useState();
   const [password, setPassword] = useState();
-  const [login, { data }] = useMutation(LOGIN, {
-    onCompleted: function (data) {
-      if (data && data.login) {
-        localStorage.setItem("token", data.login.token);
-        localStorage.setItem("studentName", data.login.studentName);
-        localStorage.setItem("studentNo", data.login.studentNo);
-        props.setIsLoggedIn(true);
-        props.setStudentName(data.login.studentName);
-      }
-    },
-    onError: function (err) {
-      setMessage(err.graphQLErrors[0].message);
-    },
-  });
+
+  // const [login, { data }] = useMutation(LOGIN, {
+  //   onCompleted: function (data) {
+  //     if (data && data.login) {
+  //       localStorage.setItem("token", data.login.token);
+  //       localStorage.setItem("studentName", data.login.studentName);
+  //       localStorage.setItem("studentNo", data.login.studentNo);
+  //       props.setIsLoggedIn(true);
+  //       props.setStudentName(data.login.studentName);
+  //     }
+  //   },
+  //   onError: function (err) {
+  //     setMessage(err.graphQLErrors[0].message);
+  //   },
+  // });
+  const login = () => {
+    console.log("login");
+    axios
+      .post("http://localhost:8080/login", {
+        username: studentNo,
+        password: password,
+      })
+      .then((res) => {
+        //  res.data是后端返回
+        console.log(res.data);
+        if (res.data.token) {
+          // 登陆成功
+          localStorage.setItem("token", res.data.token);
+          localStorage.setItem("studentName", studentNo);
+          localStorage.setItem("studentNo", studentNo);
+          props.setIsLoggedIn(true); //跳转
+          props.setStudentName(studentNo); //
+        } else {
+          // 登陆失败
+          alert(res.data.message);
+        }
+      });
+  };
 
   return (
     <div
@@ -35,7 +60,7 @@ export default (props) => {
     >
       <div style={{ width: "100%" }}>
         <WhiteSpace size="xl" />
-        <h1 style={{textAlign:"center"}}>学生登陆</h1>
+        <h1 style={{ textAlign: "center" }}>学生登陆</h1>
         <WhiteSpace size="xl" />
         <InputItem
           clear
@@ -64,11 +89,7 @@ export default (props) => {
         <Button
           type="primary"
           onClick={() => {
-            login({
-              variables: {
-                student: { studentNo, password },
-              },
-            });
+            login();
           }}
         >
           登陆

@@ -31,7 +31,7 @@ const cache = new InMemoryCache({
 });
 
 const httpLink = createHttpLink({
-  uri: "http://gql.xueyuzi.com:4000",
+  uri: "http://localhost:4000",
 });
 
 const authLink = setContext((_, { headers }) => {
